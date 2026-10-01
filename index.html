@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Site de sensibilisation : reconnaître les SMS, messages WhatsApp et e-mails piégés (phishing)</title>
+  <meta name="description" content="Site de sensibilisation gratuit et sans danger. Apprenez à reconnaître les faux SMS, messages WhatsApp et e-mails qui essaient de vous piéger. Aucun vrai lien, rien n'est envoyé, rien n'est installé.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9F%A2%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css?v=1">
+</head>
+<body data-app="sms">
+
+<a class="skip" href="#regle">Aller directement à la règle à retenir</a>
+
+<div class="bandeau-info" role="note">
+  <p>Site de sensibilisation. Tous les messages montrés ici sont des imitations sans danger : aucun vrai lien, rien n'est envoyé ni installé.</p>
+  <div class="taille-texte" aria-label="Taille du texte">
+    <button type="button" data-taille="moins" aria-label="Réduire la taille du texte">A−</button>
+    <button type="button" data-taille="plus" aria-label="Agrandir la taille du texte">A+</button>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="contenu">
+    <p class="hero-panneau" aria-hidden="true">💬</p>
+    <h1>Faux SMS, messages WhatsApp et e-mails : apprenez à repérer le piège</h1>
+    <p class="intro">Colis bloqué, amende à payer, « coucou maman j'ai changé de numéro », abonnement à annuler, pièce jointe à ouvrir… Ces messages imitent ceux que vous recevez vraiment. Leur but : vous faire cliquer, répondre ou payer dans la panique.</p>
+    <p class="intro">Ici, vous pouvez vous entraîner sans aucun risque, sur un faux téléphone. Réagissez comme vous le feriez pour de vrai.</p>
+    <div class="actions">
+      <a class="bouton bouton-principal" href="#demo">Commencer l'entraînement</a>
+      <a class="bouton bouton-secondaire" href="#regle">Voir la règle à retenir</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ DÉMONSTRATION ============ -->
+  <section id="demo" class="section section-demo" aria-labelledby="demo-titre">
+    <div class="contenu">
+      <h2 id="demo-titre">L'entraînement</h2>
+      <p>Choisissez une application, ouvrez chaque message et décidez quoi faire. Certains sont de vrais messages : le but n'est pas de tout supprimer, mais d'apprendre à faire la différence.</p>
+
+      <h3 class="demo-question">Quelle application ?</h3>
+      <div class="choix-app" role="group" aria-label="Application">
+        <button type="button" data-app="sms" aria-pressed="true"><span class="app-icone" aria-hidden="true">💬</span> Messages (SMS)</button>
+        <button type="button" data-app="whatsapp" aria-pressed="false"><span class="app-icone" aria-hidden="true">🟢</span> WhatsApp</button>
+        <button type="button" data-app="email" aria-pressed="false"><span class="app-icone" aria-hidden="true">✉️</span> E-mails</button>
+      </div>
+
+      <h3 class="demo-question">Choisissez un message</h3>
+      <p class="progression" id="progression" aria-live="polite"></p>
+      <div class="ligne-progression">
+        <button type="button" class="lien-discret" id="remise-zero">Remettre à zéro</button>
+      </div>
+      <div class="cartes-messages" id="cartes-messages" role="group" aria-label="Messages à examiner"></div>
+    </div>
+
+    <p class="contenu astuce-demo">Rien de ce que vous faites sur ce faux téléphone n'a d'effet : aucun vrai lien n'est ouvert, aucun message n'est envoyé.</p>
+
+    <div class="telephone" id="telephone" aria-label="Imitation d'un téléphone">
+      <div class="tel-encoche" aria-hidden="true"></div>
+      <div class="tel-entete" id="tel-entete"></div>
+      <div class="tel-ecran" id="tel-ecran" aria-live="polite"></div>
+      <div class="tel-barre" id="tel-barre"></div>
+    </div>
+  </section>
+
+  <!-- ============ LES LEVIERS PSYCHOLOGIQUES ============ -->
+  <section id="leviers" class="section section-leviers" aria-labelledby="lev-titre">
+    <div class="contenu">
+      <h2 id="lev-titre">Comment ils vous manipulent</h2>
+      <p>Un message piégé ne s'attaque pas à votre téléphone, mais à vos émotions. Il appuie sur un bouton pour vous faire agir vite, sans réfléchir. Apprenez à reconnaître ces six leviers : dès que vous en sentez un, méfiez-vous.</p>
+      <div class="cartes-leviers" id="cartes-leviers"></div>
+    </div>
+  </section>
+
+  <!-- ============ RÈGLE D'OR ============ -->
+  <section id="regle" class="section section-regle" aria-labelledby="regle-titre">
+    <div class="contenu">
+      <h2 id="regle-titre" class="regle-texte">Un message qui vous presse d'agir tout de suite est presque toujours un piège. On ne se précipite jamais.</h2>
+      <p class="regle-suite">Dans le doute, on ne clique pas et on ne répond pas. On vérifie par un autre moyen : en ouvrant soi-même l'application ou le site officiel, ou en appelant le numéro officiel (au dos de la carte, sur le vrai site).</p>
+    </div>
+  </section>
+
+  <!-- ============ VÉRIFIER AUTREMENT ============ -->
+  <section id="verifier" class="section" aria-labelledby="verif-titre">
+    <div class="contenu">
+      <h2 id="verif-titre">Le bon réflexe : vérifier par un autre moyen</h2>
+      <p>Le message veut que vous restiez dedans, que vous cliquiez sur son lien à lui. Le réflexe qui déjoue presque tous les pièges, c'est de sortir du message et de vérifier ailleurs :</p>
+      <ul class="conseils">
+        <li><strong>Votre banque « signale une opération suspecte » ?</strong> Ne cliquez pas, n'appelez pas le numéro donné. Ouvrez vous-même l'application de votre banque, ou appelez le numéro au dos de votre carte.</li>
+        <li><strong>Un « colis » est bloqué ?</strong> Allez sur le site du transporteur en tapant son adresse vous-même, avec votre numéro de suivi. La Poste, Chronopost et les douanes ne réclament jamais quelques euros par SMS.</li>
+        <li><strong>Les impôts, l'Assurance maladie, une amende ?</strong> Passez par le site officiel en .gouv.fr que vous tapez vous-même, jamais par le lien du message.</li>
+        <li><strong>Un proche vous écrit d'un nouveau numéro ?</strong> Appelez-le sur son ancien numéro pour vérifier que c'est bien lui, avant de faire quoi que ce soit.</li>
+      </ul>
+      <div class="encadre">
+        <h3>Deux gestes qui révèlent un lien piégé</h3>
+        <ul>
+          <li><strong>Voir où mène vraiment un lien</strong> : sur ordinateur, posez la souris dessus sans cliquer ; sur téléphone, appuyez longuement dessus. La vraie adresse s'affiche.</li>
+          <li><strong>Lire l'adresse depuis la fin</strong> : ce qui compte, c'est le nom juste avant le premier « / ». Dans <span class="url-demo">ameli.fr.<b>remboursement-securise.com</b>/…</span>, le vrai site est <b>remboursement-securise.com</b>, pas ameli.fr. Ce n'est donc pas ameli.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MINI-JEU LEVIERS ============ -->
+  <section id="jeu" class="section section-jeu" aria-labelledby="jeu-titre">
+    <div class="contenu">
+      <h2 id="jeu-titre">Petit test : quel bouton essaie-t-on d'appuyer ?</h2>
+      <p>Pour chaque message, trouvez le principal levier utilisé pour vous manipuler.</p>
+      <div id="jeu-zone" class="jeu-zone"></div>
+    </div>
+  </section>
+
+  <!-- ============ DÉJÀ CLIQUÉ ============ -->
+  <section id="deja-clique" class="section section-urgence" aria-labelledby="urg-titre">
+    <div class="contenu">
+      <h2 id="urg-titre">J'ai déjà cliqué ou répondu</h2>
+      <p>Pas de panique, mais agissez vite. Selon ce que vous avez fait :</p>
+      <ol class="urgence">
+        <li><strong>Vous avez donné vos identifiants ou un code reçu par SMS ?</strong> Changez tout de suite votre mot de passe depuis l'application ou le site officiel, et prévenez l'organisme concerné.</li>
+        <li><strong>Vous avez donné votre numéro de carte, ou fait un paiement ?</strong> Appelez votre banque et faites opposition. Le numéro est au dos de votre carte.</li>
+        <li><strong>Vous avez envoyé de l'argent à un « proche » ?</strong> Contactez votre banque immédiatement : un virement récent peut parfois être bloqué.</li>
+        <li><strong>Signalez</strong> le SMS en le transférant au <strong>33700</strong> (service officiel, gratuit), et les e-mails sur <a href="https://www.signal-spam.fr" rel="noopener noreferrer" target="_blank">signal-spam.fr</a>.</li>
+        <li><strong>Faites-vous aider</strong> par le dispositif officiel : <a href="https://www.cybermalveillance.gouv.fr" rel="noopener noreferrer" target="_blank">cybermalveillance.gouv.fr</a> ou <a href="https://www.17cyber.gouv.fr" rel="noopener noreferrer" target="_blank">17Cyber</a>.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ FICHE ============ -->
+  <section id="fiche-section" class="section" aria-labelledby="fiche-titre">
+    <div class="contenu">
+      <h2 id="fiche-titre">La fiche à garder près de soi</h2>
+      <p>Imprimez-la et gardez-la à portée de main, ou près du téléphone fixe.</p>
+
+      <div id="fiche" class="fiche">
+        <p class="fiche-panneau" aria-hidden="true">💬</p>
+        <p class="fiche-titre">Avant de cliquer ou de répondre à un message</p>
+        <p class="fiche-regle">Un message qui me <strong>presse</strong> (payer, cliquer, donner un code, tout de suite) est presque toujours un piège.</p>
+        <p class="fiche-sous">Je me méfie dès que je ressens : peur · urgence · appât du gain · curiosité · une « autorité » · un proche pressé.</p>
+        <p class="fiche-action">Je ne clique pas, je ne réponds pas. Je vérifie autrement :</p>
+        <p class="fiche-liste">• J'ouvre moi-même l'appli ou le site officiel<br>• J'appelle le numéro officiel (dos de la carte)<br>• Un « proche » ? Je l'appelle sur son ancien numéro</p>
+        <p class="fiche-action">Je ne communique jamais un code reçu par SMS.</p>
+        <p class="fiche-ligne"><span class="sr-only">Personne à appeler en cas de doute :</span></p>
+        <p class="fiche-ligne">Tél. :</p>
+        <p class="fiche-petit">Signaler un SMS : le transférer au 33700 · Aide : cybermalveillance.gouv.fr</p>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="bouton bouton-principal" id="imprimer">Imprimer la fiche</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PARTAGER ============ -->
+  <section id="partager" class="section section-partage" aria-labelledby="part-titre">
+    <div class="contenu">
+      <h2 id="part-titre">Envoyez ce site à vos proches</h2>
+      <p>Une personne prévenue, c'est une personne protégée. Partagez-le avec ceux qui pourraient tomber dans le piège.</p>
+      <div class="actions">
+        <button type="button" class="bouton bouton-principal cache" id="partage-natif">Partager</button>
+        <a class="bouton bouton-secondaire" id="partage-whatsapp" href="#" rel="noopener noreferrer" target="_blank">Envoyer par WhatsApp</a>
+        <a class="bouton bouton-secondaire" id="partage-mail" href="#">Envoyer par e-mail</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pied">
+  <div class="contenu">
+    <p>Site de sensibilisation indépendant et open source. Aucun cookie, aucun traceur, aucune donnée collectée, aucun contenu chargé depuis un autre site.</p>
+    <p>Les noms d'entreprises et d'organismes cités servent uniquement d'exemples réalistes. Ce site n'est lié à aucun d'eux, et aucune adresse ni aucun lien montré ici n'est réel.</p>
+  </div>
+</footer>
+
+<!-- ============ RÉVÉLATION ============ -->
+<div id="revelation" class="revelation" role="dialog" aria-modal="true" aria-labelledby="rev-titre" hidden>
+  <div class="rev-boite" tabindex="-1">
+    <div class="rev-panneau" aria-hidden="true"><span id="rev-panneau-texte">STOP</span></div>
+    <h2 id="rev-titre"></h2>
+    <p class="rev-rassure" id="rev-rassure"></p>
+    <p id="rev-explication"></p>
+    <div class="rev-leviers" id="rev-leviers" hidden>
+      <p class="rev-leviers-titre">Les leviers utilisés contre vous</p>
+      <div class="rev-leviers-liste" id="rev-leviers-liste"></div>
+    </div>
+    <div class="rev-indice">
+      <p class="rev-indice-titre" id="rev-indice-titre">🔍 L'indice qui aurait dû vous alerter</p>
+      <p id="rev-indice"></p>
+    </div>
+    <div class="actions">
+      <button type="button" class="bouton bouton-principal" id="rev-suivant">Message suivant</button>
+      <button type="button" class="bouton bouton-secondaire" id="rev-recommencer">Revoir ce message</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js?v=1"></script>
+</body>
+</html>

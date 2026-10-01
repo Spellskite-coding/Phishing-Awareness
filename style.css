@@ -1,0 +1,435 @@
+/* =========================================================
+   Phishing-Awareness — SMS & WhatsApp
+   Même famille visuelle que Fake-Captcha-Awareness :
+   panneau de sécurité (jaune, bleu nuit, rouge, vert).
+   ========================================================= */
+
+:root {
+  --encre: #14213D;
+  --texte: #1B1F2A;
+  --papier: #FFFFFF;
+  --gris: #EEF1F5;
+  --gris-trait: #C9D0DB;
+  --jaune: #FFC61A;
+  --jaune-pale: #FFF4CC;
+  --rouge: #C8102E;
+  --rouge-pale: #FDECEE;
+  --vert: #1E7B4F;
+  --vert-pale: #E6F4EC;
+  --or: #0B5B3B;
+  --focus: #1F5FD6;
+
+  --police: Verdana, Geneva, "DejaVu Sans", Tahoma, sans-serif;
+  --police-titre: "Arial Black", "Arial Bold", Gadget, "Helvetica Neue", Arial, sans-serif;
+
+  color-scheme: light;
+  font-size: 125%;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html { scroll-behavior: smooth; scroll-padding-top: env(safe-area-inset-top, 0px); }
+body {
+  margin: 0; padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: var(--papier); color: var(--texte);
+  font-family: var(--police); font-size: 1rem; line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+h1, h2, h3 { font-family: var(--police-titre); color: var(--encre); line-height: 1.2; margin: 0 0 .6em; }
+h1 { font-size: clamp(1.7rem, 5vw, 2.6rem); letter-spacing: -.01em; }
+h2 { font-size: clamp(1.35rem, 3.6vw, 1.9rem); }
+h3 { font-size: 1.1rem; }
+p, ul, ol { margin: 0 0 1em; }
+a { color: var(--focus); text-underline-offset: .15em; }
+:focus-visible { outline: 4px solid var(--focus); outline-offset: 3px; }
+
+.contenu { max-width: 42rem; margin: 0 auto; padding: 0 1.25rem; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.skip { position: absolute; left: -9999px; top: 0; background: var(--encre); color: #fff; padding: .6em 1em; z-index: 100; }
+.skip:focus { left: 1rem; top: 1rem; }
+
+/* ---------- Bandeau ---------- */
+.bandeau-info {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: .5rem 1.25rem; padding-top: calc(.5rem + env(safe-area-inset-top, 0px));
+  background: var(--encre); color: #fff; font-size: .8rem;
+}
+.bandeau-info p { margin: 0; }
+.taille-texte { display: flex; gap: .4rem; flex-shrink: 0; }
+.taille-texte button {
+  font: inherit; font-weight: bold; font-size: .9rem;
+  min-width: 2.6rem; min-height: 2.4rem;
+  background: #fff; color: var(--encre); border: 0; border-radius: .35rem; cursor: pointer;
+}
+
+/* ---------- Boutons ---------- */
+.actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.4rem; }
+.bouton {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 3.2rem; padding: .7em 1.3em;
+  font: inherit; font-weight: bold; text-decoration: none; text-align: center;
+  border-radius: .5rem; cursor: pointer; border: 3px solid var(--encre);
+}
+.bouton-principal { background: var(--encre); color: #fff; }
+.bouton-principal:hover { background: #22365F; }
+.bouton-secondaire { background: #fff; color: var(--encre); }
+.bouton-secondaire:hover { background: var(--gris); }
+.cache { display: none; }
+
+/* ---------- Hero ---------- */
+.hero { background: var(--jaune); padding: 3rem 0 3.2rem; border-bottom: 10px solid var(--encre); }
+.hero-panneau {
+  width: 4.4rem; height: 4.4rem; margin: 0 0 1.2rem; display: grid; place-items: center;
+  font-size: 2.3rem; background: #fff; border: 6px solid var(--rouge); border-radius: 50%;
+}
+.hero h1 { color: var(--encre); }
+.hero .intro { font-size: 1.05rem; max-width: 38rem; }
+
+/* ---------- Sections ---------- */
+.section { padding: 3.2rem 0; }
+.section + .section { border-top: 2px solid var(--gris); }
+.section-demo { background: var(--gris); }
+
+/* ---------- Choix d'application + cartes ---------- */
+.demo-question { margin: 2rem 0 .8rem; font-size: 1.15rem; }
+.choix-app { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; max-width: 32rem; }
+.choix-app button {
+  display: flex; align-items: center; justify-content: center; gap: .6rem;
+  min-width: 0; min-height: 4.2rem; padding: .6rem .7rem;
+  font: inherit; font-size: 1rem; font-weight: bold;
+  background: #fff; color: var(--encre);
+  border: 3px solid var(--encre); border-radius: .7rem; cursor: pointer;
+}
+.choix-app .app-icone { flex-shrink: 0; }
+.choix-app button[aria-pressed="true"] { background: var(--encre); color: #fff; }
+.app-icone { font-size: 1.4rem; line-height: 1; }
+
+.progression {
+  display: inline-block; margin: 0 0 .5rem; padding: .35rem .9rem; border-radius: 2rem;
+  background: #fff; border: 2px solid var(--gris-trait);
+  font-size: .85rem; font-weight: bold; color: var(--encre);
+}
+.progression.complet { background: var(--vert-pale); border-color: var(--vert); color: var(--vert); border-radius: .6rem; }
+.ligne-progression { margin-bottom: 1rem; }
+.lien-discret {
+  font: inherit; font-size: .8rem; color: var(--focus);
+  text-decoration: underline; text-underline-offset: .15em;
+  background: none; border: 0; padding: .4rem .2rem; cursor: pointer;
+}
+
+.cartes-messages { display: grid; gap: .7rem; margin-bottom: 1.8rem; }
+@media (min-width: 44rem) { .cartes-messages { grid-template-columns: 1fr 1fr; } }
+.carte-message {
+  display: flex; align-items: flex-start; gap: .8rem;
+  min-height: 4.4rem; padding: .85rem 1rem;
+  font: inherit; text-align: left; color: var(--texte);
+  background: #fff; border: 3px solid var(--gris-trait); border-radius: .7rem; cursor: pointer;
+}
+.carte-message:hover { border-color: var(--encre); }
+.carte-message[aria-pressed="true"] { border-color: var(--encre); box-shadow: inset 0 0 0 2px var(--encre); background: var(--jaune-pale); }
+.cm-avatar {
+  flex-shrink: 0; width: 2.6rem; height: 2.6rem; border-radius: 50%;
+  display: grid; place-items: center; font-weight: bold; color: #fff; font-size: .95rem;
+}
+.cm-corps { flex: 1; min-width: 0; }
+.cm-haut { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem; }
+.cm-exp { font-weight: bold; color: var(--encre); font-size: .95rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cm-diff { flex-shrink: 0; font-size: .7rem; color: #6A7280; letter-spacing: .1em; }
+.cm-diff i { font-style: normal; color: var(--jaune); }
+.cm-diff i.on { color: #E0A800; }
+.cm-apercu { font-size: .85rem; color: #4A5468; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.cm-etat { margin-top: .35rem; font-size: .78rem; font-weight: bold; }
+.carte-message.etat-dejoue { border-color: #9BCBB2; }
+.carte-message.etat-dejoue .cm-etat { color: var(--vert); }
+.carte-message.etat-piege { border-color: #F0B8B8; }
+.carte-message.etat-piege .cm-etat { color: var(--rouge); }
+
+.astuce-demo { font-size: .88rem; margin: 0 auto 1.2rem; }
+
+/* =========================================================
+   LE FAUX TÉLÉPHONE
+   ========================================================= */
+.telephone {
+  max-width: 24rem;
+  margin: 0 auto;
+  background: #000; border-radius: 2.2rem; padding: .6rem;
+  box-shadow: 0 1.5rem 3rem -1rem rgba(20, 33, 61, .45);
+}
+.tel-encoche { height: 1.4rem; position: relative; }
+.tel-encoche::after {
+  content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 38%; height: 1.4rem; background: #000; border-radius: 0 0 .9rem .9rem;
+}
+.tel-entete {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .7rem .9rem; color: #fff; border-radius: 1.6rem 1.6rem 0 0;
+}
+.tel-ecran { background: #fff; min-height: 26rem; padding: 1rem .8rem; overflow-y: auto; }
+.tel-barre { height: 2.6rem; background: #F2F2F4; border-radius: 0 0 1.6rem 1.6rem; display: grid; place-items: center; }
+.tel-barre::after { content: ""; width: 34%; height: .35rem; background: #C7C7CC; border-radius: 1rem; }
+
+/* En-tête selon l'app */
+.tel-avatar {
+  width: 2.4rem; height: 2.4rem; border-radius: 50%; flex-shrink: 0;
+  display: grid; place-items: center; font-weight: bold; color: #fff; font-size: .9rem;
+}
+.tel-titre { flex: 1; min-width: 0; line-height: 1.2; }
+.tel-nom { display: block; font-weight: 600; font-size: .95rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tel-statut { display: block; font-size: .72rem; opacity: .85; }
+.tel-retour { font-size: 1.4rem; }
+.tel-icones { font-size: 1.1rem; opacity: .9; }
+
+body[data-app="sms"] .tel-entete { background: #F7F7F8; color: #111; border-bottom: 1px solid #E2E2E7; }
+body[data-app="sms"] .tel-statut { color: #8A8A8E; opacity: 1; }
+body[data-app="whatsapp"] .tel-entete { background: #075E54; color: #fff; }
+body[data-app="whatsapp"] .tel-ecran { background: #ECE5DD; }
+
+/* Bulles de message */
+.fil { display: flex; flex-direction: column; gap: .5rem; }
+.date-sep { text-align: center; font-size: .68rem; color: #8A8A8E; margin: .3rem 0; }
+.bulle {
+  max-width: 85%; padding: .6rem .8rem; border-radius: 1.1rem; font-size: .9rem; line-height: 1.45;
+  position: relative; word-wrap: break-word; overflow-wrap: anywhere;
+}
+.bulle.recu { align-self: flex-start; background: #E9E9EB; color: #111; border-bottom-left-radius: .3rem; }
+.bulle.envoye { align-self: flex-end; background: #2F7BF6; color: #fff; border-bottom-right-radius: .3rem; }
+body[data-app="whatsapp"] .bulle.recu { background: #fff; }
+body[data-app="whatsapp"] .bulle.envoye { background: #DCF8C6; color: #111; }
+.bulle-heure { display: block; text-align: right; font-size: .62rem; opacity: .6; margin-top: .2rem; }
+.bulle .exp-sms {
+  display: block; font-size: .66rem; font-weight: 700; color: #C8102E; margin-bottom: .2rem; letter-spacing: .02em;
+}
+.lien-msg {
+  color: #1155CC; text-decoration: underline; word-break: break-all; cursor: pointer;
+  background: none; border: 0; padding: 0; font: inherit;
+}
+body[data-app="whatsapp"] .bulle.envoye .lien-msg { color: #075E54; }
+.bulle.envoye .lien-msg { color: #EAF2FF; }
+
+/* Pièce jointe (surtout pour les e-mails plus tard, déjà prête) */
+.piece-jointe {
+  display: flex; align-items: center; gap: .6rem; margin-top: .5rem;
+  padding: .55rem .7rem; background: rgba(0,0,0,.05); border-radius: .5rem;
+  font: inherit; font-size: .82rem; color: inherit; border: 1px solid rgba(0,0,0,.1); cursor: pointer; width: 100%;
+}
+.pj-icone { width: 2rem; height: 2.4rem; flex-shrink: 0; background: #E8413A; color: #fff; border-radius: .2rem; display: grid; place-items: center; font-size: .6rem; font-weight: bold; }
+
+/* Carte lien enrichie (aperçu de site dans le message) */
+.apercu-lien {
+  margin-top: .5rem; border: 1px solid rgba(0,0,0,.12); border-radius: .6rem; overflow: hidden;
+  background: rgba(255,255,255,.6); cursor: pointer; width: 100%; text-align: left; font: inherit; color: inherit; padding: 0;
+}
+.al-image { height: 4.5rem; background: linear-gradient(135deg, #cdd7e6, #9fb0c8); display: grid; place-items: center; font-size: 1.6rem; }
+.al-texte { padding: .5rem .6rem; }
+.al-titre { font-weight: 600; font-size: .8rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.al-url { font-size: .7rem; color: #6A7280; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Zone de saisie + actions sous le téléphone */
+.tel-saisie {
+  display: flex; align-items: center; gap: .5rem; padding: .6rem .3rem .2rem;
+}
+.tel-champ {
+  flex: 1; background: #fff; border: 1px solid #D0D0D5; border-radius: 1.2rem;
+  padding: .5rem .9rem; font-size: .82rem; color: #8A8A8E; min-height: 2.2rem; display: flex; align-items: center;
+}
+body[data-app="whatsapp"] .tel-champ { background: #fff; }
+
+.tel-choix {
+  margin: 0 auto 0; padding: 1rem 1rem 1.2rem; max-width: 24rem;
+}
+.tel-choix-titre { font-size: .9rem; font-weight: bold; color: var(--encre); text-align: center; margin: 0 0 .7rem; }
+.choix-action { display: grid; gap: .55rem; }
+.choix-action button {
+  display: flex; align-items: center; gap: .7rem;
+  min-height: 3.2rem; padding: .6rem .9rem;
+  font: inherit; font-size: .92rem; font-weight: bold; text-align: left;
+  border-radius: .6rem; cursor: pointer; border: 3px solid;
+}
+.ca-piege { background: #fff; border-color: var(--rouge); color: var(--rouge); }
+.ca-piege:hover { background: var(--rouge-pale); }
+.ca-sup { background: #fff; border-color: var(--encre); color: var(--encre); }
+.ca-sup:hover { background: var(--gris); }
+.ca-verif { background: var(--encre); border-color: var(--encre); color: #fff; }
+.ca-verif:hover { background: #22365F; }
+.ca-icone { font-size: 1.2rem; flex-shrink: 0; }
+
+/* =========================================================
+   LEVIERS PSYCHOLOGIQUES
+   ========================================================= */
+.section-leviers { background: #fff; }
+.cartes-leviers { display: grid; gap: 1rem; margin-top: 1.5rem; }
+@media (min-width: 40rem) { .cartes-leviers { grid-template-columns: 1fr 1fr; } }
+.carte-levier { border: 2px solid var(--gris-trait); border-left: 8px solid var(--encre); border-radius: 0 .6rem .6rem 0; padding: 1.1rem 1.2rem; }
+.cl-haut { display: flex; align-items: center; gap: .6rem; margin-bottom: .4rem; }
+.cl-icone { font-size: 1.6rem; }
+.cl-nom { font-family: var(--police-titre); color: var(--encre); font-size: 1.05rem; }
+.cl-exemple { font-style: italic; color: #4A5468; font-size: .9rem; margin: 0 0 .5rem; }
+.cl-reflexe { font-size: .9rem; margin: 0; }
+.cl-reflexe strong { color: var(--vert); }
+
+/* ---------- Règle d'or ---------- */
+.section-regle { background: var(--jaune); border-top: 10px solid var(--encre) !important; border-bottom: 10px solid var(--encre); }
+.regle-texte { font-size: clamp(1.4rem, 4vw, 2.1rem); line-height: 1.25; }
+.regle-suite { font-size: 1.05rem; font-weight: bold; }
+
+/* ---------- Vérifier / conseils ---------- */
+.conseils { padding-left: 1.2rem; }
+.conseils li { margin-bottom: 1rem; }
+.encadre { background: var(--gris); border-left: 8px solid var(--encre); padding: 1.3rem 1.4rem .4rem; border-radius: 0 .5rem .5rem 0; margin-top: 1.5rem; }
+.encadre ul { padding-left: 1.2rem; }
+.encadre li { margin-bottom: .7rem; }
+.url-demo, .encadre b { font-family: Consolas, "Courier New", monospace; }
+.url-demo { background: #fff; padding: .1em .4em; border-radius: .2em; font-size: .9em; word-break: break-all; }
+.url-demo b { color: var(--rouge); }
+
+/* =========================================================
+   MINI-JEU LEVIERS
+   ========================================================= */
+.section-jeu { background: var(--gris); }
+.jeu-zone { margin-top: 1.5rem; }
+.question { background: #fff; border: 2px solid var(--gris-trait); border-radius: .6rem; padding: 1.2rem; margin-bottom: 1.2rem; }
+.question-num { font-size: .8rem; color: #5A6478; margin: 0 0 .7rem; }
+.msg-jeu {
+  background: #E9E9EB; color: #111; border-radius: .6rem; padding: .8rem .9rem; margin: 0 0 1rem;
+  font-size: .88rem; line-height: 1.45;
+}
+.msg-jeu .exp-sms { display: block; font-size: .66rem; font-weight: 700; color: #C8102E; margin-bottom: .25rem; }
+.reponses { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+.reponses button {
+  font: inherit; font-weight: bold; font-size: .9rem;
+  min-height: 3rem; padding: .5em .8em;
+  background: #fff; color: var(--encre);
+  border: 3px solid var(--encre); border-radius: .5rem; cursor: pointer;
+}
+.reponses button:hover:not(:disabled) { background: var(--gris); }
+.reponses button:disabled { cursor: default; opacity: .55; }
+.reponses button.choisi { opacity: 1; }
+.retour { margin: 1rem 0 0; padding: .9rem 1rem; border-radius: .4rem; font-size: .92rem; }
+.retour.bon { background: var(--vert-pale); border-left: 6px solid var(--vert); }
+.retour.faux { background: var(--rouge-pale); border-left: 6px solid var(--rouge); }
+.retour strong { display: block; margin-bottom: .2rem; }
+.score { background: var(--encre); color: #fff; padding: 1.3rem; border-radius: .6rem; }
+.score h3 { color: var(--jaune); }
+
+/* ---------- Urgence ---------- */
+.section-urgence { background: var(--rouge-pale); }
+.section-urgence h2 { color: var(--rouge); }
+.urgence { padding-left: 1.6rem; }
+.urgence li { margin-bottom: .9rem; padding-left: .3rem; }
+.urgence li::marker { font-family: var(--police-titre); color: var(--rouge); }
+
+/* ---------- Fiche ---------- */
+.fiche { border: 6px solid var(--encre); border-radius: .8rem; padding: 1.6rem 1.5rem; background: #fff; text-align: center; max-width: 34rem; margin: 1.5rem auto 0; }
+.fiche-panneau { width: 4rem; height: 4rem; margin: 0 auto .8rem; display: grid; place-items: center; font-size: 2rem; border: 6px solid var(--rouge); border-radius: 50%; }
+.fiche-titre { font-family: var(--police-titre); font-size: 1.3rem; color: var(--encre); line-height: 1.25; }
+.fiche-regle { font-size: 1.05rem; background: var(--jaune); padding: .8rem; border-radius: .4rem; }
+.fiche-sous { font-size: .9rem; }
+.fiche-action { font-weight: bold; margin-top: 1rem; margin-bottom: .3rem; }
+.fiche-liste { text-align: left; display: inline-block; font-size: .9rem; margin: 0 auto 1rem; }
+.fiche-ligne { min-height: 2.2rem; margin: 0 auto .5rem; max-width: 26rem; border-bottom: 2px dotted #9AA1AC; text-align: left; color: #5A6478; font-size: .85rem; display: flex; align-items: flex-end; padding-bottom: .2rem; }
+.fiche-petit { font-size: .75rem; margin-top: 1rem; margin-bottom: 0; }
+
+/* ---------- Partage + pied ---------- */
+.section-partage { background: var(--jaune-pale); }
+.pied { background: var(--encre); color: #D9DFEA; padding: 2rem 0; font-size: .8rem; }
+
+/* =========================================================
+   RÉVÉLATION (STOP / Bon réflexe / Meilleur réflexe)
+   ========================================================= */
+.revelation {
+  position: fixed; inset: 0; z-index: 50; display: flex;
+  padding: 1.5rem 1rem; padding-top: calc(1.5rem + env(safe-area-inset-top, 0px)); padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+  background: rgba(20, 33, 61, .88); overflow-y: auto;
+}
+.revelation[hidden] { display: none; }
+.rev-boite {
+  width: 100%; max-width: 36rem; margin: auto;
+  background: #fff; border-radius: .8rem; border: 8px solid var(--rouge);
+  padding: 1.8rem 1.5rem 1.5rem; animation: apparait .3s ease-out;
+}
+.rev-boite:focus { outline: none; }
+@keyframes apparait { from { transform: scale(.9); opacity: 0; } to { transform: none; opacity: 1; } }
+.rev-panneau {
+  width: 6.5rem; height: 6.5rem; margin: 0 auto 1.2rem; display: grid; place-items: center;
+  background: var(--rouge); color: #fff;
+  clip-path: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%);
+  font-family: var(--police-titre); font-size: 1.5rem;
+}
+.rev-boite h2 { text-align: center; color: var(--rouge); }
+.rev-rassure { background: var(--vert-pale); border-left: 6px solid var(--vert); padding: .8rem 1rem; border-radius: .3rem; font-weight: bold; }
+.rev-leviers { margin: 0 0 1em; padding: .9rem 1rem; background: var(--jaune-pale); border-radius: .5rem; }
+.rev-leviers-titre { font-weight: bold; color: var(--encre); margin: 0 0 .5rem; }
+.rev-leviers-liste { display: flex; flex-wrap: wrap; gap: .5rem; }
+.puce-levier { display: inline-flex; align-items: center; gap: .3rem; background: #fff; border: 2px solid var(--jaune); border-radius: 2rem; padding: .25rem .7rem; font-size: .85rem; font-weight: bold; color: var(--encre); }
+.rev-indice { margin: 0 0 1em; padding: .9rem 1rem; background: #fff; border: 3px dashed var(--encre); border-radius: .5rem; }
+.rev-indice-titre { font-weight: bold; color: var(--encre); margin-bottom: .4rem; }
+.rev-indice p:last-child { margin-bottom: 0; }
+
+.revelation[data-resultat="dejoue"] .rev-boite,
+.revelation[data-resultat="meilleur"] .rev-boite { border-color: var(--vert); }
+.revelation[data-resultat="dejoue"] .rev-panneau,
+.revelation[data-resultat="meilleur"] .rev-panneau { background: var(--vert); clip-path: circle(50%); font-size: 2.6rem; }
+.revelation[data-resultat="meilleur"] .rev-panneau { background: var(--or); }
+.revelation[data-resultat="dejoue"] h2,
+.revelation[data-resultat="meilleur"] h2 { color: var(--vert); }
+.revelation[data-resultat="meilleur"] h2 { color: var(--or); }
+.revelation[data-resultat="info"] .rev-boite { border-color: var(--jaune); }
+.revelation[data-resultat="info"] .rev-panneau { background: var(--jaune); color: var(--encre); clip-path: circle(50%); font-size: 2.6rem; }
+.revelation[data-resultat="info"] h2 { color: var(--encre); }
+
+/* ---------- Petits écrans ---------- */
+@media (max-width: 36rem) {
+  :root { font-size: 112.5%; }
+  .bandeau-info { flex-direction: column; align-items: flex-start; }
+  .actions .bouton { flex: 1 1 100%; }
+  .reponses { grid-template-columns: 1fr; }
+  .choix-app button { font-size: .9rem; }
+  .rev-panneau { width: 5rem; height: 5rem; font-size: 1.2rem; }
+  .rev-boite { padding: 1.3rem 1.1rem 1.1rem; }
+}
+
+/* ---------- Impression : seulement la fiche ---------- */
+@media print {
+  :root { font-size: 100%; }
+  body * { visibility: hidden; }
+  #fiche, #fiche * { visibility: visible; }
+  #fiche { position: absolute; left: 0; right: 0; top: 0; margin: 0 auto; border-width: 4px; }
+  kbd, .fiche-regle { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+/* =========================================================
+   VUE E-MAIL (3e application)
+   ========================================================= */
+.choix-app { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 40rem; }
+@media (max-width: 30rem) { .choix-app { grid-template-columns: 1fr; } }
+
+body[data-app="email"] .tel-entete { background: #F7F7F8; color: #111; border-bottom: 1px solid #E2E2E7; }
+body[data-app="email"] .tel-ecran { background: #fff; }
+
+.mail { font-size: .9rem; color: #1B1F2A; }
+.mail-objet { font-family: var(--police); font-weight: 700; font-size: 1.1rem; color: #111; margin: 0 0 .9rem; line-height: 1.3; }
+.mail-exp { display: flex; align-items: flex-start; gap: .6rem; padding-bottom: .8rem; margin-bottom: .9rem; border-bottom: 1px solid #ECECEF; }
+.mail-avatar { width: 2.6rem; height: 2.6rem; border-radius: 50%; flex-shrink: 0; display: grid; place-items: center; font-weight: bold; color: #fff; }
+.mail-exp-info { min-width: 0; line-height: 1.35; }
+.mail-exp-nom { display: block; font-weight: 700; color: #111; }
+.mail-heure { font-weight: 400; color: #8A8A8E; font-size: .78rem; }
+.mail-exp-adr { display: block; font-size: .78rem; color: #6A7280; word-break: break-all; }
+.mail-dest { display: block; font-size: .78rem; color: #8A8A8E; }
+.mail-corps { line-height: 1.55; }
+.mail-corps b { color: #111; }
+
+.piece-jointe {
+  display: flex; align-items: center; gap: .7rem; margin-top: 1.1rem; width: 100%;
+  padding: .7rem .8rem; background: #F4F6F9; border: 1px solid #D5DBE4; border-radius: .6rem;
+  font: inherit; font-size: .85rem; color: #1B1F2A; cursor: pointer; text-align: left;
+}
+.piece-jointe:hover { background: #E9EDF3; }
+.pj-icone { width: 2.2rem; height: 2.6rem; flex-shrink: 0; background: #C8102E; color: #fff; border-radius: .25rem; display: grid; place-items: center; font-size: .62rem; font-weight: bold; }
+.pj-nom { word-break: break-all; }
